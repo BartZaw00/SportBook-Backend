@@ -9,8 +9,9 @@ namespace SportFacilitiesReservationApp
         public AutoMapperProfile()
         {
             CreateMap<SportFacility, SportFacilityDetailsModel>()
-               .ForMember(dest => dest.PhotoUrls, opt => opt.MapFrom(src => src.Photos.Select(p => p.PhotoUrl).ToList()));
+              .ForMember(dest => dest.Photos, opt => opt.MapFrom(src => src.Photos.Select(p => p.PhotoUrl).ToList()));
             CreateMap<SportFacilityDetailsModel, SportFacility>().ReverseMap();
+            CreateMap<Photo, PhotoModel>();
         }
     }
 }
