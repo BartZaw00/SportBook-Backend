@@ -21,6 +21,7 @@ namespace SportFacilitiesReservationApp.Services
         {
             var sportFacilities = await _dbContext.SportFacilities
                 .Include(sf => sf.Photos)
+                .Include(sf => sf.Type)
                 .ToListAsync();
             return _mapper.Map<List<SportFacilityDetailsModel>>(sportFacilities);
         }
