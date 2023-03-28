@@ -42,7 +42,6 @@ public partial class SportFacilitiesDbContext : DbContext
         modelBuilder.Entity<Photo>(entity =>
         {
             entity.Property(e => e.PhotoId)
-                .ValueGeneratedNever()
                 .HasColumnName("PhotoID");
             entity.Property(e => e.PhotoUrl)
                 .HasMaxLength(255)
@@ -61,7 +60,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.ReservationId).HasName("PK__Reservat__B7EE5F042D4ACB61");
 
             entity.Property(e => e.ReservationId)
-                .ValueGeneratedNever()
                 .HasColumnName("ReservationID");
             entity.Property(e => e.EndTime).HasColumnType("datetime");
             entity.Property(e => e.StartTime).HasColumnType("datetime");
@@ -78,7 +76,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.ReviewId).HasName("PK__Reviews__74BC79AE2C5BDC95");
 
             entity.Property(e => e.ReviewId)
-                .ValueGeneratedNever()
                 .HasColumnName("ReviewID");
             entity.Property(e => e.Comment)
                 .HasMaxLength(255)
@@ -102,7 +99,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.RoleId).HasName("PK__Roles__8AFACE3A8CC203B0");
 
             entity.Property(e => e.RoleId)
-                .ValueGeneratedNever()
                 .HasColumnName("RoleID");
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
@@ -114,7 +110,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.SportId).HasName("PK_Sport");
 
             entity.Property(e => e.SportId)
-                .ValueGeneratedNever()
                 .HasColumnName("SportID");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
@@ -126,7 +121,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.SportFacilityId).HasName("PK__SportFac__5FB08B94463FA971");
 
             entity.Property(e => e.SportFacilityId)
-                .ValueGeneratedNever()
                 .HasColumnName("SportFacilityID");
             entity.Property(e => e.Address)
                 .HasMaxLength(255)
@@ -182,7 +176,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.TypeId).HasName("PK_Type");
 
             entity.Property(e => e.TypeId)
-                .ValueGeneratedNever()
                 .HasColumnName("TypeID");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
@@ -197,7 +190,6 @@ public partial class SportFacilitiesDbContext : DbContext
             entity.HasKey(e => e.UserId).HasName("PK__Users__1788CCACA3235891");
 
             entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
                 .HasColumnName("UserID");
             entity.Property(e => e.Email)
                 .HasMaxLength(255)

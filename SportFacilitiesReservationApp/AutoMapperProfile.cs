@@ -22,8 +22,7 @@ namespace SportFacilitiesReservationApp
 
             CreateMap<User, LoginModel>();
             CreateMap<User, RegistrationModel>();
-            CreateMap<User, LoginResponseModel>()
-                .ForMember(dest => dest.RoleId, opt => opt.MapFrom(src => src.RoleId));
+            CreateMap<User, LoginResponseModel>();
 
             CreateMap<Photo, PhotoModel>();
             CreateMap<Sport, SportModel>();

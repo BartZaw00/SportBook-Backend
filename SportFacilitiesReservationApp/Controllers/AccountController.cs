@@ -7,29 +7,30 @@ using SportFacilitiesReservationApp.Services.Interfaces;
 namespace SportFacilitiesReservationApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class LoginController : ControllerBase
+    [Route("account")]
+    public class AccountController : ControllerBase
     {
-        private readonly IAccountService _loginService;
-        private readonly ITokenService _tokenService;
+        private readonly IAccountService _accountService;
         private readonly IConfiguration _config;
 
-        public LoginController(IAccountService loginService, ITokenService tokenService, IConfiguration config)
+        public AccountController(IAccountService accountService, IConfiguration config)
         {
-            _loginService = loginService;
-            _tokenService = tokenService;
+            _accountService = accountService;
             _config = config;
         }
-        [HttpPost]
+
+        [HttpPost("register")]
+        public async Task<ActionResult> Register([FromBody] RegistrationModel registration)
+        {
+            _accountService.Registration(registration);
+
+            return Ok();
+        }
+
+        [HttpPost("login")]
         public async Task<ActionResult<LoginResponseModel>> Login([FromBody] LoginModel user)
         {
-            LoginResponseModel response = await _loginService.Login(user);
-            if (response == null)
-                return BadRequest();
-
-            var jwt = _tokenService.BuildToken(_config["JWT:Key"].ToString(), _config["JWT:Issuer"], response);
-
-            response.JWTBearer = jwt;
+            LoginResponseModel response = _accountService.Login(user);
 
             return Ok(response);
         }

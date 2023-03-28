@@ -9,6 +9,10 @@ using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.PortableExecutable;
+using FluentValidation;
+using Microsoft.AspNetCore.Identity;
+using SportFacilitiesReservationApp.Models.Validators;
+using SportFacilitiesReservationApp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,16 +22,18 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+builder.Services.AddScoped<IValidator<RegistrationModel>, RegistrationModelValidator>();
 builder.Services.AddTransient<SportFacilitiesDbContext>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ISportFacilityService, SportFacilityService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IAccountService, LoginService>();
-builder.Services.AddScoped<ITokenService, AccountService>();
-builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc().AddNewtonsoftJson();
 builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -44,31 +50,28 @@ builder.Services.AddCors(options =>
 });
 
 
+var authenticationSettings = new AuthenticationSettings();
+builder.Configuration.GetSection("Authentication").Bind(authenticationSettings);
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddSingleton(authenticationSettings);
+
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(cfg =>
+{
+    cfg.RequireHttpsMetadata = false;
+    cfg.SaveToken = true;
+    cfg.TokenValidationParameters = new TokenValidationParameters
     {
-        var issuer = builder.Configuration["JWT:Issuer"];
-        var key = builder.Configuration["JWT:Key"];
-
-        if (string.IsNullOrEmpty(issuer) || string.IsNullOrEmpty(key))
-        {
-            // obs³u¿ b³¹d w przypadku, gdy wartoœæ Issuer lub Key jest pusta
-        }
-        else
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = false,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = issuer,
-                ValidAudience = issuer,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
-            };
-        }
-    });
+        ValidIssuer = authenticationSettings.JwtIssuer,
+        ValidAudience = authenticationSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.JwtKey))
+    };
+});
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -110,14 +113,16 @@ var app = builder.Build();
         app.UseSwaggerUI();
     }
 
-    app.UseAuthentication();
+app.UseCors(MyAllowSpecificOrigins);
 
-    app.UseCors(MyAllowSpecificOrigins);
+app.UseAuthentication();
 
-    app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-    app.UseAuthorization();
+app.UseRouting();
 
-    app.MapControllers();
+app.UseAuthorization();
 
-    app.Run();
+app.MapControllers();
+
+app.Run();

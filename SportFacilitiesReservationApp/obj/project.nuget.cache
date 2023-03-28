@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "eMwRWvbjEVXk3XMKTY7LbT7071REt5ErAsHG1YgLAXPGQzSKApyQbuNqRFNS/5i7R0Q3Ozblw3sRPBtBAxVM+Q==",
+  "dgSpecHash": "nOAH83+8y5NlFwLev6ssGm1OMFq4lEp4bAIs36O9PIsjtHlaYHXVMi5FHoA8isipqfc8+REHvi+TSp9JYFV8nQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\bzawa\\source\\repos\\SportFacilitiesReservationApp\\SportFacilitiesReservationApp\\SportFacilitiesReservationApp.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\bzawa\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
     "C:\\Users\\bzawa\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\bzawa\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\bzawa\\.nuget\\packages\\fluentvalidation\\11.5.1\\fluentvalidation.11.5.1.nupkg.sha512",
     "C:\\Users\\bzawa\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\bzawa\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\bzawa\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",

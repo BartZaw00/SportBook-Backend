@@ -87,3 +87,4 @@ C:\Users\bzawa\source\repos\SportFacilitiesReservationApp\SportFacilitiesReserva
 C:\Users\bzawa\source\repos\SportFacilitiesReservationApp\SportFacilitiesReservationApp\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\bzawa\source\repos\SportFacilitiesReservationApp\SportFacilitiesReservationApp\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\bzawa\source\repos\SportFacilitiesReservationApp\SportFacilitiesReservationApp\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\Users\bzawa\source\repos\SportFacilitiesReservationApp\SportFacilitiesReservationApp\bin\Debug\net6.0\FluentValidation.dll
