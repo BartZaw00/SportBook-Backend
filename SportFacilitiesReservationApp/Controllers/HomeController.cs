@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportFacilitiesReservationApp.Models;
-using SportFacilitiesReservationApp.Services;
 using SportFacilitiesReservationApp.Services.Interfaces;
 
 namespace SportFacilitiesReservationApp.Controllers
@@ -9,7 +8,7 @@ namespace SportFacilitiesReservationApp.Controllers
     [Route("[controller]")]
     public class HomeController : ControllerBase
     {
-        private readonly IHomeService _homeService; 
+        private readonly IHomeService _homeService;
 
         public HomeController(IHomeService homeService)
         {
@@ -17,7 +16,7 @@ namespace SportFacilitiesReservationApp.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<SportFacilityDetailsModel>>> GetSportFacilities()
+        public async Task<ActionResult<List<SportFacilityBoxModel>>> GetSportFacilities()
         {
             return Ok(await _homeService.getSportFacilities());
         }

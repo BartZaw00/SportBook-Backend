@@ -2,8 +2,8 @@
 {
     public class LoginResponseModel
     {
-        public string? UserNick { get; set; }
-        public int? Role { get; set; }
-        public string JWTBearer { get; set; }
+        public string Username { get; set; }
+        public int RoleId { get; set; }
+        public string token { get; set; }
     }
 }

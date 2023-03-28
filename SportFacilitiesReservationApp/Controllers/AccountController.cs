@@ -10,11 +10,11 @@ namespace SportFacilitiesReservationApp.Controllers
     [Route("[controller]")]
     public class LoginController : ControllerBase
     {
-        private readonly ILoginService _loginService;
+        private readonly IAccountService _loginService;
         private readonly ITokenService _tokenService;
         private readonly IConfiguration _config;
 
-        public LoginController(ILoginService loginService, ITokenService tokenService, IConfiguration config)
+        public LoginController(IAccountService loginService, ITokenService tokenService, IConfiguration config)
         {
             _loginService = loginService;
             _tokenService = tokenService;

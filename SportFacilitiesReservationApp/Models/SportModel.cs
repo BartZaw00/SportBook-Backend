@@ -1,9 +1,7 @@
 ﻿namespace SportFacilitiesReservationApp.Models
 {
-    public class TypeModel
+    public class SportModel
     {
         public string Name { get; set; }
-
-        public string Surface { get; set; }
     }
 }
