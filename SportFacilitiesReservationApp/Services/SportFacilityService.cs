@@ -17,12 +17,13 @@ namespace SportFacilitiesReservationApp.Services
             _mapper = mapper;
         }
 
-        public async Task<List<SportFacilityDetailsModel>> getSportFacilities()
+        public async Task<List<SportFacilityDetailsModel>> getSportFacilityById(int sportFacilityID)
         {
             var sportFacilities = await _dbContext.SportFacilities
                 .Include(sf => sf.Photos)
                 .Include(sf => sf.Sport)
                 .Include(sf => sf.Type)
+                .Where(sf => sf.SportFacilityId == sportFacilityID)
                 .ToListAsync();
             return _mapper.Map<List<SportFacilityDetailsModel>>(sportFacilities);
         }

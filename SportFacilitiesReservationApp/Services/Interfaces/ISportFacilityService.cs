@@ -4,6 +4,6 @@ namespace SportFacilitiesReservationApp.Services.Interfaces
 {
     public interface ISportFacilityService
     {
-        public Task<List<SportFacilityDetailsModel>> getSportFacilities();
+        public Task<List<SportFacilityDetailsModel>> getSportFacilityById(int sportFacilityID);
     }
 }

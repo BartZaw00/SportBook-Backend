@@ -16,10 +16,10 @@ namespace SportFacilitiesReservationApp.Controllers
             _sportFacilityService = sportFacilityService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<SportFacilityDetailsModel>>> GetSportFacilities()
+        [HttpGet("getById")]
+        public async Task<ActionResult<List<SportFacilityDetailsModel>>> GetSportFacilityById(int sportFacilityID)
         {
-            return Ok(await _sportFacilityService.getSportFacilities());
+            return Ok(await _sportFacilityService.getSportFacilityById(sportFacilityID));
         }
     }
 }

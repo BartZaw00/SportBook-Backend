@@ -28,6 +28,7 @@ builder.Services.AddTransient<SportFacilitiesDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
 builder.Services.AddScoped<IReservationService, ReservationService>();
+builder.Services.AddScoped<ISportService, SportService>();
 builder.Services.AddScoped<ISportFacilityService, SportFacilityService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
