@@ -7,7 +7,7 @@ using SportFacilitiesReservationApp.Services.Interfaces;
 namespace SportFacilitiesReservationApp.Controllers
 {
     [ApiController]
-    [Route("account")]
+    [Route("Account")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountService _accountService;
@@ -34,6 +34,5 @@ namespace SportFacilitiesReservationApp.Controllers
 
             return Ok(response);
         }
-
     }
 }

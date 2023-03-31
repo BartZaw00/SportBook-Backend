@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SportFacilitiesReservationApp.Entities;
 using SportFacilitiesReservationApp.Models;
+using SportFacilitiesReservationApp.Models.Validators;
 using SportFacilitiesReservationApp.Services.Interfaces;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
@@ -27,6 +29,15 @@ namespace SportFacilitiesReservationApp.Services
 
         public void Registration(RegistrationModel registration)
         {
+            var validator = new RegistrationModelValidator(_dbContext);
+            var validationResult = validator.Validate(registration);
+
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = string.Join("; ", validationResult.Errors.Select(x => x.ErrorMessage));
+                throw new ValidationException($"Błędy walidacji: {errorMessages}");
+            }
+
             User user = new User();
 
             user.Username = registration.Username;
