@@ -9,20 +9,20 @@ namespace SportFacilitiesReservationApp.Services
     public class ReservationService : IReservationService
     {
 
-        //private readonly SportFacilitiesDbContext _dbContext;
-        //private readonly IMapper _mapper;
+        private readonly SportFacilitiesDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        //public ReservationService(SportFacilitiesDbContext dbContext, IMapper mapper)
-        //{
-        //    _dbContext = dbContext;
-        //    _mapper = mapper;
-        //}
+        public ReservationService(SportFacilitiesDbContext dbContext, IMapper mapper)
+        {
+            _dbContext = dbContext;
+            _mapper = mapper;
+        }
 
-        //public async Task<List<ReservationDetailsModel>> getReservations()
-        //{
-        //    var reservations = await _dbContext.Reservations.ToListAsync();
-        //    return _mapper.Map<List<ReservationDetailsModel>>(reservations);
-        //}
+        public async Task<List<ReservationDetailsModel>> getReservations()
+        {
+            var reservations = await _dbContext.Reservations.ToListAsync();
+            return _mapper.Map<List<ReservationDetailsModel>>(reservations);
+        }
 
         //public async Task<List<ReservationDetailsModel>> addReservation(ReservationDetailsModel obj, int idUser)
         //{

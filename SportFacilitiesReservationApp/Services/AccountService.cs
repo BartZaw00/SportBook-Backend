@@ -56,9 +56,13 @@ namespace SportFacilitiesReservationApp.Services
             //    return null;
             var response = new LoginResponseModel();
             response.Token = BuildToken(login);
+            response.Email = login.Email;
             string username = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.Username).FirstOrDefault();
             response.Username = username;
-            response.Email = login.Email;
+            string name = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.Name).FirstOrDefault();
+            response.Name = name;
+            string surname = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.Surname).FirstOrDefault();
+            response.Surname = surname;
             int id = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.RoleId).FirstOrDefault();
             response.RoleId = id;
 

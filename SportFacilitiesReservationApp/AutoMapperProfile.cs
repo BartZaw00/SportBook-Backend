@@ -28,6 +28,8 @@ namespace SportFacilitiesReservationApp
             CreateMap<Sport, SportModel>();
             CreateMap<Role, RoleModel>();
             CreateMap<Type, TypeModel>();
+
+            CreateMap<Reservation, ReservationDetailsModel>();
         }
     }
 }
