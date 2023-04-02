@@ -23,6 +23,7 @@ namespace SportFacilitiesReservationApp
             CreateMap<User, LoginModel>();
             CreateMap<User, RegistrationModel>();
             CreateMap<User, LoginResponseModel>();
+            CreateMap<User, UserDetailsModel>();
 
             CreateMap<Photo, PhotoModel>();
             CreateMap<Sport, SportModel>();

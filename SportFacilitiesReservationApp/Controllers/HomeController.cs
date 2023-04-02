@@ -27,5 +27,10 @@ namespace SportFacilitiesReservationApp.Controllers
         {
             return Ok(await _homeService.getSportFacilitiesBySport(sportID));
         }
+        [HttpGet("getBySearchQuery")]
+        public async Task<ActionResult<List<SportFacilityBoxModel>>> GetSportFacilitiesBySearchQuery(string searchQuery)
+        {
+            return Ok(await _homeService.searchSportFacilities(searchQuery));
+        }
     }
 }

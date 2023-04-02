@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportFacilitiesReservationApp.Models;
 using SportFacilitiesReservationApp.Services;
@@ -33,6 +34,17 @@ namespace SportFacilitiesReservationApp.Controllers
             LoginResponseModel response = _accountService.Login(user);
 
             return Ok(response);
+        }
+
+        [HttpPut("update/{currentUserId}")]
+        public async Task<ActionResult<UserDetailsModel>> UpdateUser(int currentUserId, [FromBody] UserDetailsModel user)
+        {
+            var updatedUser = await _accountService.updateUser(user, currentUserId);
+            if (updatedUser == null)
+            {
+                return NotFound();
+            }
+            return Ok(updatedUser);
         }
     }
 }

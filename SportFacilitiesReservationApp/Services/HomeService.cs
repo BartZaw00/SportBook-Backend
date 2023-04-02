@@ -38,5 +38,17 @@ namespace SportFacilitiesReservationApp.Services
 
             return _mapper.Map<List<SportFacilityBoxModel>>(sportFacilities);
         }
+
+        public async Task<List<SportFacilityBoxModel>> searchSportFacilities(string searchString)
+        {
+            var sportFacilities = await _dbContext.SportFacilities
+                .Include(sf => sf.Photos)
+                .Include(sf => sf.Sport)
+                .Include(sf => sf.Type)
+                .Where(sf => sf.Address.Contains(searchString) || sf.City.Contains(searchString) || sf.Type.Name.Contains(searchString) || sf.Type.Surface.Contains(searchString))
+                .ToListAsync();
+            return _mapper.Map<List<SportFacilityBoxModel>>(sportFacilities);
+        }
+
     }
 }

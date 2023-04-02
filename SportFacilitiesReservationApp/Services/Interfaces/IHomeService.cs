@@ -6,5 +6,6 @@ namespace SportFacilitiesReservationApp.Services.Interfaces
     {
         public Task<List<SportFacilityBoxModel>> getSportFacilities();
         public Task<List<SportFacilityBoxModel>> getSportFacilitiesBySport(int sportID);
+        public Task<List<SportFacilityBoxModel>> searchSportFacilities(string searchString);
     }
 }

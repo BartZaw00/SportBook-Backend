@@ -19,12 +19,14 @@ namespace SportFacilitiesReservationApp.Services
         private readonly SportFacilitiesDbContext _dbContext;
         private readonly IPasswordHasher<User> _passwordHasher;
         private readonly AuthenticationSettings _authenticationSettings;
+        private readonly IMapper _mapper;
 
-        public AccountService(SportFacilitiesDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings)
+        public AccountService(SportFacilitiesDbContext dbContext, IPasswordHasher<User> passwordHasher, AuthenticationSettings authenticationSettings, IMapper mapper)
         {
             _dbContext = dbContext;
             _passwordHasher = passwordHasher;
             _authenticationSettings = authenticationSettings;
+            _mapper = mapper;
         }
 
         public void Registration(RegistrationModel registration)
@@ -67,6 +69,25 @@ namespace SportFacilitiesReservationApp.Services
             response.RoleId = id;
 
             return response;
+        }
+
+        public async Task<UserDetailsModel> updateUser(UserDetailsModel obj, int currentUserId)
+        {
+            var currentUser = await _dbContext.Users.FindAsync(currentUserId);
+
+            if (currentUser == null)
+                return null;
+
+            currentUser.Username = obj.Nick;
+            currentUser.Name = obj.Name;
+            currentUser.Surname = obj.Surname;
+            currentUser.Email = obj.Email;
+            currentUser.Password = _passwordHasher.HashPassword(currentUser, obj.Password);
+            currentUser.PhotoUrl = obj.PhotoUrl;
+
+            await _dbContext.SaveChangesAsync();
+
+            return _mapper.Map<UserDetailsModel>(currentUser);
         }
 
         public string BuildToken(LoginModel login)
