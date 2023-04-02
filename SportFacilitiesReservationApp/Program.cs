@@ -24,6 +24,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegistrationModel>, RegistrationModelValidator>();
+builder.Services.AddScoped<IValidator<UserDetailsModel>>(sp =>
+{
+    var dbContext = sp.GetService<SportFacilitiesDbContext>();
+    var currentUserData = new UserDetailsModelValidator.UserContext
+    {
+        CurrentUsername = "<current-username>",
+        CurrentEmail = "<current-email>"
+    };
+    return new UserDetailsModelValidator(dbContext, currentUserData);
+});
+
 builder.Services.AddTransient<SportFacilitiesDbContext>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IHomeService, HomeService>();
@@ -31,6 +42,8 @@ builder.Services.AddScoped<IReservationService, ReservationService>();
 builder.Services.AddScoped<ISportService, SportService>();
 builder.Services.AddScoped<ISportFacilityService, SportFacilityService>();
 builder.Services.AddScoped<IUserService, UserService>();
+
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddMvc().AddNewtonsoftJson();
 builder.Services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

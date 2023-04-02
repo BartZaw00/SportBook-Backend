@@ -11,6 +11,7 @@ using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using static SportFacilitiesReservationApp.Models.Validators.UserDetailsModelValidator;
 
 namespace SportFacilitiesReservationApp.Services
 {
@@ -73,12 +74,28 @@ namespace SportFacilitiesReservationApp.Services
 
         public async Task<UserDetailsModel> updateUser(UserDetailsModel obj, int currentUserId)
         {
+            var currentUserData = new UserContext
+            {
+                CurrentUserId = currentUserId,
+                CurrentUsername = obj.Username,
+                CurrentEmail = obj.Email
+            };
+
+            var validator = new UserDetailsModelValidator(_dbContext, currentUserData);
+            var validationResult = validator.Validate(obj);
+
+            if (!validationResult.IsValid)
+            {
+                var errorMessages = string.Join("; ", validationResult.Errors.Select(x => x.ErrorMessage));
+                throw new ValidationException($"Błędy walidacji: {errorMessages}");
+            }
+
             var currentUser = await _dbContext.Users.FindAsync(currentUserId);
 
             if (currentUser == null)
                 return null;
 
-            currentUser.Username = obj.Nick;
+            currentUser.Username = obj.Username;
             currentUser.Name = obj.Name;
             currentUser.Surname = obj.Surname;
             currentUser.Email = obj.Email;

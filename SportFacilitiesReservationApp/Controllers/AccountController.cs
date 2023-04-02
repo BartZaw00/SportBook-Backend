@@ -37,6 +37,7 @@ namespace SportFacilitiesReservationApp.Controllers
         }
 
         [HttpPut("update/{currentUserId}")]
+        [Authorize]
         public async Task<ActionResult<UserDetailsModel>> UpdateUser(int currentUserId, [FromBody] UserDetailsModel user)
         {
             var updatedUser = await _accountService.updateUser(user, currentUserId);
