@@ -55,9 +55,6 @@ namespace SportFacilitiesReservationApp.Services
 
         public LoginResponseModel Login(LoginModel login)
         {
-            //var login = await _dbContext.Users.FirstOrDefaultAsync<User>(user => user.Email == loginModel.Email && user.Password == loginModel.Password);
-            //if (login == null)
-            //    return null;
             var response = new LoginResponseModel();
             response.Token = BuildToken(login);
             response.Email = login.Email;
@@ -67,8 +64,10 @@ namespace SportFacilitiesReservationApp.Services
             response.Name = name;
             string surname = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.Surname).FirstOrDefault();
             response.Surname = surname;
-            int id = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.RoleId).FirstOrDefault();
-            response.RoleId = id;
+            int roleId = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.RoleId).FirstOrDefault();
+            response.RoleId = roleId;
+            int userId = _dbContext.Users.Where(u => u.Email == login.Email).Select(x => x.UserId).FirstOrDefault();
+            response.UserId = userId;
 
             return response;
         }
