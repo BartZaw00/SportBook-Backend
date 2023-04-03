@@ -95,17 +95,45 @@ namespace SportFacilitiesReservationApp.Services
             if (currentUser == null)
                 return null;
 
+            currentUser.PhotoUrl = obj.PhotoUrl;
             currentUser.Username = obj.Username;
             currentUser.Name = obj.Name;
             currentUser.Surname = obj.Surname;
             currentUser.Email = obj.Email;
-            currentUser.Password = _passwordHasher.HashPassword(currentUser, obj.Password);
-            currentUser.PhotoUrl = obj.PhotoUrl;
 
             await _dbContext.SaveChangesAsync();
 
             return _mapper.Map<UserDetailsModel>(currentUser);
         }
+
+        public async Task ChangePassword(ChangePasswordModel model, int currentUserId)
+        {
+            var currentUser = await _dbContext.Users.FindAsync(currentUserId);
+
+            if (currentUser == null)
+                return;
+
+            var validator = new ChangePasswordModelValidator();
+            var validationResult = validator.Validate(model);
+
+            if (!validationResult.IsValid)
+                throw new Exception(string.Join("; ", validationResult.Errors));
+
+            var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(currentUser, currentUser.Password, model.Password);
+
+            if (passwordVerificationResult == PasswordVerificationResult.Success)
+            {
+                throw new Exception("Nowe hasło musi się różnić od poprzedniego hasła.");
+            }
+
+            currentUser.Password = _passwordHasher.HashPassword(currentUser, model.Password);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+
+
+
 
         public string BuildToken(LoginModel login)
         {

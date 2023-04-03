@@ -36,8 +36,7 @@ namespace SportFacilitiesReservationApp.Controllers
             return Ok(response);
         }
 
-        [HttpPut("update/{currentUserId}")]
-        [Authorize]
+        [HttpPut("updateUser/{currentUserId}")]
         public async Task<ActionResult<UserDetailsModel>> UpdateUser(int currentUserId, [FromBody] UserDetailsModel user)
         {
             var updatedUser = await _accountService.updateUser(user, currentUserId);
@@ -46,6 +45,14 @@ namespace SportFacilitiesReservationApp.Controllers
                 return NotFound();
             }
             return Ok(updatedUser);
+        }
+
+        [HttpPut("updateUserPassword/{currentUserId}")]
+        public async Task<ActionResult<UserDetailsModel>> UpdateUserPassword(int currentUserId, [FromBody] ChangePasswordModel model)
+        {
+            await _accountService.ChangePassword(model, currentUserId);
+        
+            return Ok();
         }
     }
 }

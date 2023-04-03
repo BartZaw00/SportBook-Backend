@@ -49,6 +49,5 @@ namespace SportFacilitiesReservationApp.Services
                 .ToListAsync();
             return _mapper.Map<List<SportFacilityBoxModel>>(sportFacilities);
         }
-
     }
 }

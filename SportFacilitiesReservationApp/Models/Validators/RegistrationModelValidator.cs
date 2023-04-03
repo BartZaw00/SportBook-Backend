@@ -25,7 +25,6 @@ namespace SportFacilitiesReservationApp.Models.Validators
                 .WithMessage("Hasło musi mieć od 8 do 30 znaków i zawierać co najmniej jedną dużą literę, jedną małą literę, jedną cyfrę oraz jeden z następujących znaków specjalnych: ! @ # $ %.");
 
 
-
             RuleFor(x => x.Username)
                 .Custom((value, context) =>
                 {
