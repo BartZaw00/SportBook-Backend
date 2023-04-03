@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SportFacilitiesReservationApp.Entities;
+using SportFacilitiesReservationApp.Exceptions;
 using SportFacilitiesReservationApp.Models;
 using SportFacilitiesReservationApp.Models.Validators;
 using SportFacilitiesReservationApp.Services.Interfaces;
@@ -117,13 +118,13 @@ namespace SportFacilitiesReservationApp.Services
             var validationResult = validator.Validate(model);
 
             if (!validationResult.IsValid)
-                throw new Exception(string.Join("; ", validationResult.Errors));
+                throw new BadRequestException(string.Join("; ", validationResult.Errors));
 
             var passwordVerificationResult = _passwordHasher.VerifyHashedPassword(currentUser, currentUser.Password, model.Password);
 
             if (passwordVerificationResult == PasswordVerificationResult.Success)
             {
-                throw new Exception("Nowe hasło musi się różnić od poprzedniego hasła.");
+                throw new BadRequestException("Nowe hasło musi się różnić od poprzedniego hasła.");
             }
 
             currentUser.Password = _passwordHasher.HashPassword(currentUser, model.Password);
@@ -141,14 +142,14 @@ namespace SportFacilitiesReservationApp.Services
 
             if (user == null)
             {
-                throw new BadHttpRequestException("Invalid email or password - user null");
+                throw new BadRequestException("Invalid email or password - user null");
             }
 
             var result = _passwordHasher.VerifyHashedPassword(user, user.Password, login.Password);
             Debug.WriteLine($"result: {result}");
             if (result == PasswordVerificationResult.Failed)
             {
-                throw new BadHttpRequestException("Invalid email or password - password");
+                throw new BadRequestException("Invalid email or password - password");
             }
 
             var claims = new[] {

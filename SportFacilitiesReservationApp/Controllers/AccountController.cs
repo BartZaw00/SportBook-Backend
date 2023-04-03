@@ -37,6 +37,7 @@ namespace SportFacilitiesReservationApp.Controllers
         }
 
         [HttpPut("updateUser/{currentUserId}")]
+ 
         public async Task<ActionResult<UserDetailsModel>> UpdateUser(int currentUserId, [FromBody] UserDetailsModel user)
         {
             var updatedUser = await _accountService.updateUser(user, currentUserId);
@@ -48,6 +49,7 @@ namespace SportFacilitiesReservationApp.Controllers
         }
 
         [HttpPut("updateUserPassword/{currentUserId}")]
+
         public async Task<ActionResult<UserDetailsModel>> UpdateUserPassword(int currentUserId, [FromBody] ChangePasswordModel model)
         {
             await _accountService.ChangePassword(model, currentUserId);
